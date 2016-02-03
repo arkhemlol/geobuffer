@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <style media="screen" type="text/css">
+        body, html {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script src="//cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="build/buffer.js"></script>
+
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var map = new L.map("map");
+        map.setView([58.45962524414062, 34.5286213832762], 13);
+        setTimeout(function() {
+            map.invalidateSize();
+            var polyline = {
+                "type": "Feature",
+                "geometry": {"type": "LineString", "coordinates":
+                        [
+                            [
+                                37.434539794921875,
+                                55.84833710649607
+                            ],
+                            [
+                                37.52105712890625,
+                                55.9353563623487
+                            ],
+                            [
+                                37.6446533203125,
+                                56.01066647040695
+                            ],
+                            [
+                                37.758636474609375,
+                                55.98839609794612
+                            ],
+                            [
+                                37.803955078125,
+                                56.054401879996654
+                            ],
+                            [
+                                37.69683837890625,
+                                56.03138942063395
+                            ],
+                            [
+                                37.68585205078125,
+                                55.94919982336746
+                            ],
+                            [
+                                37.736663818359375,
+                                55.85835810656004
+                            ],
+                            [
+                                37.781982421875,
+                                55.937663949475265
+                            ],
+                            [
+                                37.593841552734375,
+                                55.87839235515579
+                            ],
+                            [
+                                37.904205322265625,
+                                55.88301417578358
+                            ],
+                            [
+                                37.8369140625,
+                                55.76807604014381
+                            ]
+                        ]},
+                "properties": {
+                    "name": "Polyline",
+                    "category": "Route"
+                }
+            };
+            var osm = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+                var polyBuffer = buffer.Buffer.fromGeoJson(polyline);
+                polyBuffer.distance = 350;
+                var result = polyBuffer.toGeoJson();
+                var plineLayer = L.geoJson(polyline, {
+                    weight: 1
+                });
+                var polybuf = L.geoJson(result, {
+                    weight: 1
+                });
+                map.addLayer(osm)
+                        .addLayer(polybuf)
+                        .addLayer(plineLayer).fitBounds(plineLayer.getBounds());
+        }, 300);
+    });
+
+</script>
+</body>
+</html>

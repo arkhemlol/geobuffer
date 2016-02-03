@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <style media="screen" type="text/css">
+        body, html {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script src="//cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script data-main="build/buffer.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var map = new L.map("map");
+        map.setView([58.45962524414062, 34.5286213832762], 13);
+        setTimeout(function() {
+            map.invalidateSize();
+            var polyline = {
+                "type": "Feature",
+                "geometry": {"type": "LineString", "coordinates":
+                        [
+                            [
+                                34.1729736328125,
+                                56.45338475677306
+                            ],
+                            [
+                                34.78271484375,
+                                57.25528054528889
+                            ],
+                            [
+                                36.551513671875,
+                                57.777446660664914
+                            ],
+                            [
+                                37.4578857421875,
+                                57.621875380195455
+                            ]
+                        ]},
+                "properties": {
+                    "name": "Polyline",
+                    "category": "Route"
+                }
+            };
+            var osm = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+            var buffer = require("buffer");
+            var polyBuffer = buffer.Buffer.fromGeoJson(polyline);
+            polyBuffer.distance = 350;
+            var result = polyBuffer.toGeoJson();
+            var plineLayer = L.geoJson(polyline, {
+                weight: 1
+            });
+            var polybuf = L.geoJson(result, {
+                weight: 1
+            });
+            map.addLayer(osm)
+                    .addLayer(polybuf)
+                    .addLayer(plineLayer).fitBounds(plineLayer.getBounds());
+        }, 300);
+    });
+
+</script>
+</body>
+</html>

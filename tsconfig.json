@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "module": "amd",
+    "rootDir": "./src/"
+  },
+  "files": [
+    "./src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+

@@ -1,0 +1,49 @@
+{
+  "name": "geometryBuffer",
+  "version": "0.1.0",
+  "description": "typescript implementation of buffer point and polyline algorithm",
+  "main": "index.js",
+  "dependencies": {
+    "delaunay": "https://github.com/arkhemlol/delaunay.git#bcc7812",
+    "exports-loader": "^0.6.2",
+    "ts-loader": "^0.8.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "jasmine-node": "^1.14.5",
+    "jasmine-node-karma": "^1.6.1",
+    "karma": "^0.13.11",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-coverage": "^0.5.3",
+    "karma-html-reporter": "^0.2.7",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-requirejs": "^0.2.2",
+    "phantomjs": "^1.9.18",
+    "requirejs": "^2.1.22",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arkhemlol/geometryBuffer.git"
+  },
+  "keywords": [
+    "point",
+    "polyline",
+    "buffer",
+    "geometry",
+    "algorithms",
+    "geojson",
+    "typescript"
+  ],
+  "author": "Ivan Lobanov <arkhemlol@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arkhemlol/bufferPolyline/issues"
+  },
+  "homepage": "https://github.com/arkhemlol/bufferPolyline#readme"
+}
