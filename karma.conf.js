@@ -11,28 +11,29 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine', 'requirejs'],
+        frameworks: ['jasmine', 'requirejs', 'jasmine-matchers'],
 
 
         // list of files / patterns to load in the browser
         files: [
             'bower_components/jquery/dist/jquery.min.js',
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
-            'bower_components/leaflet/dist/leaflet.js',
+            {pattern: 'bower_components/leaflet/dist/*-src.js', included: false},
             {pattern: 'bower_components/delaunay/*.js', included: false},
             {pattern: 'test-main.js', included: true},
-            {pattern: 'src/**/*.ts', included: false},
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'src/**/*.map', included: false},
             {pattern: 'tests/**/*spec.js', included: false},
+            {pattern: 'tests/**/*spec.ts', included: false},
+            {pattern: 'tests/**/*spec.js.map', included: false},
             {pattern: 'tests/**/*.geojson', watched: true, served: true, included: false}
         ],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-            //'src/**/*.js': 'coverage'
-        },
+        //preprocessors: {
+        //    'src/**/*.js': 'coverage'
+        //},
 
         reporters: ['progress', 'coverage', 'html'],
 
@@ -71,7 +72,7 @@ module.exports = function(config) {
             namedFiles: false, // name files instead of creating sub-directories
             pageTitle: null, // page title for reports; browser info by default
             urlFriendlyName: false, // simply replaces spaces with _ for files/dirs
-            reportName: 'bufferPolylineReport', // report summary filename; browser info by default
+            reportName: 'bufferReport', // report summary filename; browser info by default
 
 
             // experimental

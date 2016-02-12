@@ -10,12 +10,22 @@ Object.keys(window.__karma__.files).forEach(function(file) {
     var normalizedTestModule = file.replace(/^\/base\/|\.js$/g, '');
     allTestFiles.push(normalizedTestModule);
   }
+
 });
 
 require.config({
   // Karma serves files under /base, which is the basePath from your config file
-  baseUrl: '/base',
-
+  baseUrl: '/base/',
+  paths: {
+    jquery: "bower_components/jquery/dist/jquery.min",
+    delaunay: "bower_components/delaunay/delaunay",
+    leaflet: "bower_components/leaflet/dist/leaflet-src"
+  },
+  shim: {
+    jquery: {
+      exports: "$"
+    }
+  },
   // dynamically load all test files
   deps: allTestFiles,
 

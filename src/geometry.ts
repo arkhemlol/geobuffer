@@ -2,7 +2,7 @@
  * Created by LobanovI on 16.11.2015.
  */
 
-import helpers = require("./helpers");
+import helpers = require("src/helpers");
 
 module geometry {
     "use strict";

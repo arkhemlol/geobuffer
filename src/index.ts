@@ -2,12 +2,17 @@
 /**
  * Created by LobanovI on 19.10.2015.
  */
-import helpers = require("./helpers");
-import geometry = require("./geometry");
+import helpers = require("src/helpers");
+import geometry = require("src/geometry");
 
 module buffer {
     "use strict";
 
+    export function validateValue(value): boolean {
+        return !(typeof value === 'undefined' ||
+        value <= 0 || typeof value == 'string' || Array.isArray(value) ||
+        typeof value === "object");
+    }
 
     class Intersections {
         public bottom: Array<geometry.Point>;
@@ -17,30 +22,20 @@ module buffer {
     export class PointBuffer {
         public resolution: number;
         private _geometry: geometry.Point;
-        private _distance: number;
 
-        constructor(point: number[], distance: number, options?: any) {
+        constructor(point: number[], options?: any) {
             this.resolution = options && options.resolution || 36;
-            this._distance = distance;
             this._geometry = new geometry.Point(point[0], point[1]);
         }
 
-        public set distance(dist: number) {
-            this._distance = dist;
-        }
-
-        public  get distance(): number {
-            return this._distance;
-        }
-
-        private calculate(distance: number): number[][][] {
+        public calculate(distance: number): number[][][] {
             var resMultiple: number;
             var result: geometry.Polygon;
-            if (!distance) {
-                throw new helpers.BufferError("Distance for buffer is not provided! Use distance setter to provide distance",
+            if (!validateValue(distance)) {
+                throw new helpers.BufferError("Distance for buffer wasn\'t provided or was in incorrect format!",
                     `distance ${distance}`);
             }
-            if (this._geometry === undefined) {
+            if (!this._geometry) {
                 throw new helpers.BufferError("Geometry is not provided or has incorrect format", `geometry ${this._geometry}`);
             }
             result = new geometry.Polygon();
@@ -53,14 +48,11 @@ module buffer {
             result.enclose();
             return result.toArray();
         }
-
     }
 
-    class LineBuffer {
+    export class LineBuffer {
         public resolution: number;
         private _geometry: geometry.LineString;
-        private _geomtype: string;
-        private _distance: number;
 
         constructor(line: number[][], options?: any) {
             this.resolution = options && options.resolution || 36;
@@ -72,14 +64,14 @@ module buffer {
             this._geometry = new geometry.LineString(segments);
         }
 
-        public findIntersections(rect1: geometry.SegmentRectangle, rect2: geometry.SegmentRectangle,
+        public findIntersections(distance: number, rect1: geometry.SegmentRectangle, rect2: geometry.SegmentRectangle,
                                  currentPoint: geometry.Point): Intersections {
             var result: Intersections = null,
                 diff: number = rect1.bearing - rect2.bearing;
             diff = (diff + 360) % 360;
             if (diff < 180 ) {
                 var topAcute: geometry.Point = rect1.top.intersection(rect2.top);
-                var bottomAcute: geometry.Point[] = this._addArc(currentPoint, rect2.bearing + 90, rect1.bearing - rect2.bearing);
+                var bottomAcute: geometry.Point[] = this._addArc(distance, currentPoint, rect2.bearing + 90, rect1.bearing - rect2.bearing);
                 if (topAcute) {
                     result.top = [topAcute];
                 }
@@ -88,7 +80,7 @@ module buffer {
                 }
                 return result;
             } else if (diff > 180) {
-                var topObtuse: geometry.Point[] = this._addArc(currentPoint, rect1.bearing - 90, (rect2.bearing - rect1.bearing));
+                var topObtuse: geometry.Point[] = this._addArc(distance, currentPoint, rect1.bearing - 90, (rect2.bearing - rect1.bearing));
                 var bottomObtuse: geometry.Point = rect1.bottom.intersection(rect2.bottom);
                 if (topObtuse) {
                    result.top = topObtuse;
@@ -105,18 +97,6 @@ module buffer {
             }
         }
 
-        public get geometryType(): string {
-            return this._geomtype;
-        }
-
-        public set distance(dist: number) {
-            this._distance = dist;
-        }
-
-        public  get distance(): number {
-            return this._distance;
-        }
-
         public calculate(distance: number): number[][][] {
             var segment1: geometry.Segment,
                 segment2: geometry.Segment,
@@ -126,15 +106,22 @@ module buffer {
                 outerLine: Array<geometry.Point>,
                 result: geometry.Polygon =  new geometry.Polygon();
             outerLine = [];
+            if (!distance) {
+                throw new helpers.BufferError("Distance for buffer is not provided!",
+                    `distance ${distance}`);
+            }
+            if (typeof this._geometry === "undefined") {
+                throw new helpers.BufferError("Geometry is not provided or has incorrect format", `geometry ${this._geometry}`);
+            }
             for (var k: number = 0, len: number = this._geometry.length() - 1; k < len; k++) {
                 segment1 = this._geometry.getSegmentByNumber(k);
                 segment2 = this._geometry.getSegmentByNumber(k + 1);
                 rectangle1 = segment1.getRect(distance);
                 rectangle2 = segment2.getRect(distance);
                 if (k === 0) {
-                    result.add(this._addArc(segment1.start, rectangle1.top.bearing + 90));
+                    result.add(this._addArc(distance, segment1.start, rectangle1.top.bearing + 90));
                 }
-                intersections = this.findIntersections(rectangle1, rectangle2, segment1.end);
+                intersections = this.findIntersections(distance, rectangle1, rectangle2, segment1.end);
                 if (!intersections.top) {
                     result.add([rectangle1.top.start, rectangle1.top.end, rectangle2.top.start, rectangle2.top.end]);
                 } else if (k === 0) {
@@ -155,7 +142,7 @@ module buffer {
                     outerLine = intersections.bottom.concat(outerLine);
                 }
                 if (k === len - 1) {
-                    result.add(this._addArc(segment2.end, rectangle2.top.bearing - 90));
+                    result.add(this._addArc(distance, segment2.end, rectangle2.top.bearing - 90));
                 }
             }
             result.add(outerLine);
@@ -164,7 +151,7 @@ module buffer {
             return result.toArray();
         }
 
-        private _addArc(point: geometry.Point, bearing: number, angle?: number): Array<geometry.Point> {
+        private _addArc(distance: number, point: geometry.Point, bearing: number, angle?: number): Array<geometry.Point> {
             var result: Array<geometry.Point> = [],
                 spoke: geometry.Point,
                 spokeDirection: number,
@@ -173,7 +160,7 @@ module buffer {
             bearing = (bearing + 360) % 360;
             for (var k: number = 0; k <= spokeNum; k++) {
                 spokeDirection = bearing + (_angle * (k / spokeNum));
-                spoke = point.destination(this.distance, spokeDirection);
+                spoke = point.destination(distance, spokeDirection);
                 result.push(spoke);
             }
             return result;
