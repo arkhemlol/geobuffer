@@ -23,6 +23,7 @@
     "karma-requirejs": "^0.2.2",
     "phantomjs": "^1.9.18",
     "requirejs": "^2.1.22",
+    "typescript": "^1.7.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
@@ -30,8 +31,7 @@
     "test": "karma start"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arkhemlol/geometryBuffer.git"
+    "type": "git"
   },
   "keywords": [
     "point",
@@ -42,10 +42,5 @@
     "geojson",
     "typescript"
   ],
-  "author": "Ivan Lobanov <arkhemlol@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/arkhemlol/bufferPolyline/issues"
-  },
-  "homepage": "https://github.com/arkhemlol/bufferPolyline#readme"
+  "author": "Ivan Lobanov <arkhemlol@gmail.com>"
 }

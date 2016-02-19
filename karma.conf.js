@@ -11,7 +11,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine', 'requirejs', 'jasmine-matchers'],
+        frameworks: ['requirejs', 'jasmine', 'jasmine-matchers'],
 
 
         // list of files / patterns to load in the browser
@@ -20,8 +20,9 @@ module.exports = function(config) {
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
             {pattern: 'bower_components/leaflet/dist/*-src.js', included: false},
             {pattern: 'bower_components/delaunay/*.js', included: false},
-            {pattern: 'test-main.js', included: true},
+            {pattern: 'require.config.js', included: true},
             {pattern: 'src/**/*.js', included: false},
+            {pattern: 'src/**/*.ts', included: false},
             {pattern: 'src/**/*.map', included: false},
             {pattern: 'tests/**/*spec.js', included: false},
             {pattern: 'tests/**/*spec.ts', included: false},

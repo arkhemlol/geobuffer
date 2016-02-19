@@ -1,9 +1,15 @@
 module.exports = {
-    entry: './src/index.ts',
+    entry: {
+        buffer: './src/index.ts',
+        helpers: './src/helpers.ts'
+    },
     output: {
-        filename: './build/buffer.js',
+        filename: './build/[name].js',
         libraryTarget: "umd",
-        library: "buffer"
+        library: "[name]"
+    },
+    externals: {
+        "leaflet": "L"
     },
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
