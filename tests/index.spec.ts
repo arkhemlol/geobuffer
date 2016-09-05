@@ -1,7 +1,6 @@
 /**
  * Created by LobanovI on 20.10.2015.
  */
-///<reference path="../typings/delaunay/delaunay.d.ts"/>
 ///<reference path="../typings/jasmine/jasmine.d.ts"/>
 ///<reference path="../typings/jasmine-matchers/jasmine-matchers.d.ts"/>
 ///<reference path="../typings/jquery/jquery.d.ts"/>

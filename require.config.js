@@ -18,7 +18,6 @@ require.config({
     baseUrl: '/base/',
     paths: {
         jquery: "bower_components/jquery/dist/jquery.min",
-        delaunay: "bower_components/delaunay/delaunay",
         leaflet: "bower_components/leaflet/dist/leaflet-src"
     },
     shim: {

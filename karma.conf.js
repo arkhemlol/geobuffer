@@ -1,6 +1,6 @@
 // Karma configuration
 // Generated on Tue Oct 20 2015 16:39:12 GMT+0300 (RTZ 2 (зима))
-
+var webpackConfig = require('webpack.config.js');
 module.exports = function(config) {
     'use strict';
     config.set({
@@ -11,32 +11,19 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['requirejs', 'jasmine', 'jasmine-matchers'],
+        frameworks: ['jasmine', 'jasmine-matchers', 'chai'],
 
 
         // list of files / patterns to load in the browser
         files: [
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
-            {pattern: 'bower_components/leaflet/dist/*-src.js', included: false},
-            {pattern: 'bower_components/delaunay/*.js', included: false},
-            {pattern: 'require.config.js', included: true},
-            {pattern: 'src/**/*.js', included: false},
-            {pattern: 'src/**/*.ts', included: false},
-            {pattern: 'src/**/*.map', included: false},
-            {pattern: 'tests/**/*spec.js', included: false},
-            {pattern: 'tests/**/*spec.ts', included: false},
-            {pattern: 'tests/**/*spec.js.map', included: false},
-            {pattern: 'tests/**/*.geojson', watched: true, served: true, included: false}
+            'tests/**/*.spec.ts'
         ],
 
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        //preprocessors: {
-        //    'src/**/*.js': 'coverage'
-        //},
+        preprocessors: {
+           'tests/**/*.ts': ['webpack', 'coverage']
+        },
 
-        reporters: ['progress', 'coverage', 'html'],
+        reporters: ['progress', 'coverage', 'html', 'mocha'],
 
 
         // web server port
@@ -82,6 +69,10 @@ module.exports = function(config) {
         },
         coverageReporter: {
             dir : 'tests/coverage/'
+        },
+        webpack: webpackConfig,
+        webpackMiddleware: {
+            noInfo:true
         }
     });
 };

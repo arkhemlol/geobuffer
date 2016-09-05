@@ -1,8 +1,7 @@
 /**
  * Created by LobanovI on 12.02.2016.
  */
-
-import L = require("leaflet");
+import L = require("leaflet/dist/leaflet.js");
 
 export module Leaflet {
     export class Layer {
