@@ -2,6 +2,9 @@
 /**
  * Created by LobanovI on 19.10.2015.
  */
+
+///<reference path="../typings/index.d.ts"/>
+
 import errors = require("./errors");
 import geometry = require("./geometry");
 "use strict";

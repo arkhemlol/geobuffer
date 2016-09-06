@@ -10,3 +10,5 @@ tests/coverage/
 *.orig
 npm-debug.log
 /build
+/typings
+/.tmp/

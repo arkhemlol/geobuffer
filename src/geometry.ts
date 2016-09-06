@@ -2,6 +2,8 @@
  * Created by LobanovI on 16.11.2015.
  */
 
+///<reference path="../typings/index.d.ts"/>
+
 import errors = require("./errors");
     "use strict";
 
@@ -55,8 +57,8 @@ export class Coordinate implements Number {
 
 
 export class Point {
-    public x:Coordinate;
-    public y:Coordinate;
+    public x:Coordinate | number;
+    public y:Coordinate | number;
 
     constructor(x:Coordinate | number, y:Coordinate | number) {
         if (x instanceof Coordinate && y instanceof Coordinate) {
