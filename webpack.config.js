@@ -5,9 +5,8 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     target: "web",
     entry: {
-        buffer: ['./src/index.ts'],
-        helpers: ['./src/helpers.ts'],
-        client: './src/client/client.ts'
+        buffer: ['./src/index.js'],
+        client: './src/client/client.js'
     },
     output: {
         filename: './build/[name].js',
@@ -20,13 +19,12 @@ module.exports = {
         "jquery": "jQuery"
     },
     resolve: {
-        extensions: ['', '.js', '.ts', '.less', '.css', '.svg', '.png', '.jpeg', '.jpg'],
+        extensions: ['', '.js', '.css', '.svg', '.png', '.jpeg', '.jpg'],
         modules: ['node_modules', 'src']
     },
     module: {
         loaders: [
             {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
-            {test: /\.ts$/, exclude: '/node_modules/', loader: 'ts-loader'},
             {test: /\.(png|svg|jpeg|jpg)$/, loader: 'url-loader?limit=100000&name=./build/[hash].[ext]'}
         ]
     },

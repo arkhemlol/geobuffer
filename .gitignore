@@ -1,14 +1,7 @@
-/bower_components
 /node_modules
 .idea/
-/coverage
 **/*.js.map
-tests/**/*.js
-src/**/*.js
-tests/reports/
-tests/coverage/
 *.orig
 npm-debug.log
 /build
-/typings
 /.tmp/
