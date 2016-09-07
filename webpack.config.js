@@ -39,7 +39,6 @@ module.exports = {
     debug: true,
     devtool: 'source-map',
     devServer: {
-        contentBase: './.tmp',
-        host: '10.1.1.182'
+        contentBase: './.tmp'
     }
 };
