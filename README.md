@@ -1,26 +1,62 @@
-### Buffer algorithm for polyline and point, based on turf-union and turf-buffer
-## Build
+### Geographical buffer of the given radius around polyline or point, based on turf-union and turf-buffer
+
+Works also for polylines with self-intersections.
+
+## Usage
+
+```
+  import buffer from 'geobuffer';
+
+  // for Point (geojson type Point)
+  const point = {
+    "type": "Feature",
+    "properties": {},
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        37.626286,
+        55.761412
+      ]
+    }
+  }
+  // for Polyline (geojson type LineString)
+  const line = {
+    "type": "Feature",
+    "properties": {},
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          37.553329,
+          55.752332
+        ],
+        [
+          37.562599,
+          55.773097
+        ],
+        [
+          37.585945,
+          55.764503
+        ],
+        [
+          37.611351,
+          55.753685
+        ]
+      ]
+    }
+  }
+  const radius = 20;
+  const units = 'kilometers'; // default: meters
+  const resolution = 72; // default: 36
+
+  const result = buffer(point /* line */, radius, units, resolution); // geojson type Polygon
+
+```
+
+## Develop
 
 Install dependencies by executing `npm install` from the repository root.
 
-Webpack and dev server must be installed globally:  
+Run `npm start` for testing with `Leaflet.Draw`. Draw a circle or a polyline, finish it with double click. Buffer will be shown.
 
-`npm install webpack -g`
-`npm install webpack-dev-server -g`
-
-For building two separate bundles (`buffer.js` - algorithm, `client.js` - front-end for testing with Leaflet.Draw) type:
-
-`webpack`
-
-Run dev server:  
-
-`webpack-dev-server`
-
-Development server will open on `http://localhost:8080/`.
-
-If you want dev server to be available outside (i.e. by `http://10.1.1.182:8080`), add the following to webpack.config.js devServer section:  
-    
-    devServer: {
-        contentBase: './.tmp',
-        host: '10.1.1.182'
-    }   
+`npm run build` builds a library.

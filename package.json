@@ -1,29 +1,32 @@
 {
-  "name": "geometryBuffer",
-  "version": "0.1.0",
-  "description": "implementation of buffer point and polyline algorithm",
-  "main": "index.js",
+  "name": "geobuffer",
+  "version": "0.2.0",
+  "license": "MIT",
+  "description": "Make a buffer around point, polyline in latlngs. Based on turf-union and turf-buffer",
+  "main": "dist/geobuffer.js",
   "dependencies": {
-    "leaflet": "^0.7.7",
-    "leaflet-draw": "^0.3.2",
-    "turf-bearing": "^3.0.12",
-    "turf-destination": "^3.0.12",
-    "turf-featurecollection": "^1.0.1",
-    "turf-point": "^2.0.1",
-    "turf-polygon": "^1.0.3",
-    "turf-union": "^3.0.12"
+    "@turf/bearing": "^6.0.1",
+    "@turf/destination": "^6.0.1",
+    "@turf/helpers": "^6.1.4",
+    "@turf/union": "^6.0.3"
   },
   "devDependencies": {
-    "css-loader": "^0.25.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
-    "html-webpack-plugin": "^2.22.0",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "leaflet": "^1.6.0",
+    "leaflet-draw": "^1.0.4",
+    "style-loader": "^1.1.3",
+    "url-loader": "^4.0.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
   "repository": {
     "type": "git"
   },
@@ -32,7 +35,7 @@
     "polyline",
     "buffer",
     "geometry",
-    "algorithms",
+    "geospatial",
     "geojson",
     "turf"
   ],
