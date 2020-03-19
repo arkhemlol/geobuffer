@@ -2,6 +2,8 @@
 
 Works also for polylines with self-intersections.
 
+Polygon, multipoint, multiline as well as negative buffers are not supported at the moment.
+
 ## Usage
 
 ```
@@ -47,6 +49,7 @@ Works also for polylines with self-intersections.
   }
   const radius = 20;
   const units = 'kilometers'; // default: meters
+  // precision, i.e. 360 / 36 = 10 segments for circle around a point or around polyline's edges
   const resolution = 72; // default: 36
 
   const result = buffer(point /* line */, radius, units, resolution); // geojson type Polygon
