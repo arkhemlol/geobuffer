@@ -1,6 +1,6 @@
 {
   "name": "geobuffer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "description": "Make a buffer around point, polyline in latlngs. Based on turf-union and turf-buffer",
   "main": "dist/index.js",

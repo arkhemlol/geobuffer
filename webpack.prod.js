@@ -9,7 +9,9 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
-    library: 'geobuffer'
+    library: 'geobuffer',
+    umdNamedDefine: true,
+    globalObject: `(typeof self !== 'undefined' ? self : this)`
   },
   plugins: [new CleanWebpackPlugin()]
 };

@@ -1,10 +1,13 @@
 [![Build Status](https://travis-ci.org/arkhemlol/geobuffer.svg?branch=master)](https://travis-ci.org/arkhemlol/geobuffer)
 
-### Geographical buffer of the given radius around polyline or point, based on turf-union and turf-buffer
+### Geographical buffer of the given radius around polyline or point
 
 Works also for polylines with self-intersections.
-
 Polygon, MultiPoint, MultiLineString as well as negative buffers are not supported at the moment.
+
+Based on [@turf/union](https://github.com/Turfjs/turf/tree/master/packages/turf-union) and [@turf/buffer](https://github.com/Turfjs/turf/tree/master/packages/turf-buffer).
+
+[DEMO](https://arkhemlol.github.io/geobuffer/)
 
 ## Usage
 
