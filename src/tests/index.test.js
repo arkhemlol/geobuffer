@@ -7,7 +7,7 @@ const ERRORS = {
   UNKNOWN_GEOM_TYPE: 'Unknown geometry type! See: https://leafletjs.com/examples/geojson/',
   INVALID_RADIUS: 'Radius must be greater than zero',
   MULTIPOINT_SUPPORT: 'MultiPoint type is not supported at the moment',
-  MULTILINE_SUPPORT: 'MultiLine type is not supported at the moment',
+  MULTILINE_SUPPORT: 'MultiLineString type is not supported at the moment',
   POLYGON_SUPPORT: 'Polygon type is not supported at the moment',
   MULTI_POLYGON_SUPPORT: 'MultiPolygon type is not supported at the moment',
   INVALID_STEPS: 'Steps must be a positive integer'
@@ -43,7 +43,7 @@ test('it should throw error when invalid unit type is passed', () => {
 
 test('it should throw error on unsupported geometry types', () => {
   expect(() => buffer({ type: 'Feature', geometry: { type: 'MultiPoint' } }, 10)).toThrow(ERRORS.MULTIPOINT_SUPPORT);
-  expect(() => buffer({ type: 'Feature', geometry: { type: 'MultiLine' } }, 10)).toThrow(ERRORS.MULTILINE_SUPPORT);
+  expect(() => buffer({ type: 'Feature', geometry: { type: 'MultiLineString' } }, 10)).toThrow(ERRORS.MULTILINE_SUPPORT);
   expect(() => buffer({ type: 'Feature', geometry: { type: 'Polygon' } }, 10)).toThrow(ERRORS.POLYGON_SUPPORT);
   expect(() => buffer({ type: 'Feature', geometry: { type: 'MultiPolygon' } }, 10)).toThrow(ERRORS.MULTI_POLYGON_SUPPORT);
   expect(() => buffer({ type: 'Feature', geometry: { type: 'Point', coordinates: [37, 54] } }, 10)).not.toThrow();

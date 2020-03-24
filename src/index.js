@@ -10,7 +10,7 @@ const ERRORS = {
   UNKNOWN_GEOM_TYPE: 'Unknown geometry type! See: https://leafletjs.com/examples/geojson/',
   INVALID_RADIUS: 'Radius must be greater than zero',
   MULTIPOINT_SUPPORT: 'MultiPoint type is not supported at the moment',
-  MULTILINE_SUPPORT: 'MultiLine type is not supported at the moment',
+  MULTILINE_SUPPORT: 'MultiLineString type is not supported at the moment',
   POLYGON_SUPPORT: 'Polygon type is not supported at the moment',
   MULTI_POLYGON_SUPPORT: 'MultiPolygon type is not supported at the moment',
   INVALID_STEPS: 'Steps must be a positive integer'
@@ -115,7 +115,7 @@ module.exports = function(feature, radius, options = { units: 'meters', steps: 3
     // return featurecollection(geom.coordinates.map(p => pointBuffer(p, radius, { units, steps })));
     case 'LineString':
       return lineBuffer(feature, radius, { units, steps });
-    case 'MultiLine':
+    case 'MultiLineString':
       throw new Error(ERRORS.MULTILINE_SUPPORT);
     // return featurecollection(geom.coordinates.map(l => lineBuffer(l, radius, { units, steps })));
     case 'Polygon':

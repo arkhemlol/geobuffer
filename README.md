@@ -1,8 +1,10 @@
+[![Build Status](https://travis-ci.com/arkhemlol/geobuffer.svg?branch=master)](https://travis-ci.com/arkhemlol/geobuffer)
+
 ### Geographical buffer of the given radius around polyline or point, based on turf-union and turf-buffer
 
 Works also for polylines with self-intersections.
 
-Polygon, multipoint, multiline as well as negative buffers are not supported at the moment.
+Polygon, MultiPoint, MultiLineString as well as negative buffers are not supported at the moment.
 
 ## Usage
 
@@ -49,10 +51,10 @@ Polygon, multipoint, multiline as well as negative buffers are not supported at 
   }
   const radius = 20;
   const units = 'kilometers'; // default: meters
-  // precision, i.e. 360 / 36 = 10 segments for circle around a point or around polyline's edges
-  const resolution = 72; // default: 36
+  // Number of steps, i.e. 360 / 36 = 10  -> 36 segments of 10 degrees each
+  const steps = 72; // default: 36
 
-  const result = buffer(point /* line */, radius, units, resolution); // geojson type Polygon
+  const result = buffer(point /* line */, radius, { units, steps } ); // geojson type Polygon
 
 ```
 
@@ -63,3 +65,5 @@ Install dependencies by executing `npm install` from the repository root.
 Run `npm start` for testing with `Leaflet.Draw`. Draw a circle or a polyline, finish it with double click. Buffer will be shown.
 
 `npm run build` builds a library.
+
+`npm test` runs tests.
