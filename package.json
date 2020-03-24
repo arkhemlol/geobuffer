@@ -1,6 +1,6 @@
 {
   "name": "geobuffer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "description": "Make a buffer around point, polyline in latlngs. Based on turf-union and turf-buffer",
   "main": "dist/index.js",
@@ -10,6 +10,8 @@
     "@turf/helpers": "^6.1.4",
     "@turf/union": "^6.0.3"
   },
+  "repository": "github:arkhemlol/geobuffer",
+  "homepage": "https://github.com/arkhemlol/geobuffer#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",
@@ -29,9 +31,6 @@
     "build": "webpack --config webpack.prod.js",
     "gh-pages": "webpack --config webpack.gh-pages.js",
     "test": "jest"
-  },
-  "repository": {
-    "type": "git"
   },
   "files": [
     "dist"
