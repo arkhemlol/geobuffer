@@ -44,7 +44,7 @@ export default (function() {
     if (radius && radius > 0) {
       const geojson = e.layer.toGeoJSON();
       console.log(geojson);
-      const result = buffer(geojson, radius, 'meters');
+      const result = buffer(geojson, radius);
       layer.addLayer(GeoJSON.geometryToLayer(result).bindPopup(`Radius: ${radius} meters`));
     }
     layer.addLayer(e.layer);

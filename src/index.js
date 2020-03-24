@@ -95,7 +95,6 @@ module.exports = function(feature, radius, options = { units: 'meters', steps: 3
   if (!radius || radius <= 0) {
     throw new Error(ERRORS.INVALID_RADIUS);
   }
-
   const { units, steps } = options;
   if (!units || !AVAILABLE_UNITS.includes(units)) {
     throw new Error('Unknown units type! Must be on of: ' + AVAILABLE_UNITS.join(', '));
