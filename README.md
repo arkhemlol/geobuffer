@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/arkhemlol/geobuffer.svg?branch=master)](https://travis-ci.com/arkhemlol/geobuffer)
+[![Build Status](https://travis-ci.org/arkhemlol/geobuffer.svg?branch=master)](https://travis-ci.org/arkhemlol/geobuffer)
 
 ### Geographical buffer of the given radius around polyline or point, based on turf-union and turf-buffer
 
