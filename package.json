@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "license": "MIT",
   "description": "Make a buffer around point, polyline in latlngs. Based on turf-union and turf-buffer",
-  "main": "dist/geobuffer.js",
+  "main": "dist/index.js",
   "dependencies": {
     "@turf/bearing": "^6.0.1",
     "@turf/destination": "^6.0.1",
@@ -33,6 +33,9 @@
   "repository": {
     "type": "git"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "point",
     "polyline",

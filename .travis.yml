@@ -1,12 +1,20 @@
 language: node_js
-node_js: node
-script:
+node_js: stable
+before_deploy:
   - npm run build
+  - npm run gh-pages
 deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: public
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  on:
-    branch: master
+  - provider: pages
+    skip_cleanup: true
+    local_dir: public
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    on:
+      branch: master
+  - provider: npm
+    skip_cleanup: true
+    email: $NPM_EMAIL
+    api_key: $NPM_TOKEN
+    on:
+      branch: master
+      tags: true
