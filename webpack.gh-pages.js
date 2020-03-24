@@ -3,12 +3,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   devtool: 'source-map',
   entry: './src/examples/leaflet-draw-example.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'public')
   },
   module: {
     rules: [
@@ -31,15 +31,10 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/examples/index.html'),
-      path: path.resolve(__dirname, 'dist')
+      path: path.resolve(__dirname, 'public')
     })
   ],
   optimization: {
-    usedExports: true,
-    runtimeChunk: true
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    hot: true
+    usedExports: true
   }
 };

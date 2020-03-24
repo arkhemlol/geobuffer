@@ -1,14 +1,29 @@
-import { featurecollection, polygon, point } from '@turf/helpers';
+const { polygon, point } = require('@turf/helpers');
+const destination = require('@turf/destination').default;
+const bearing = require('@turf/bearing').default;
+const union = require('@turf/union').default;
 
-import destination from '@turf/destination';
-import bearing from '@turf/bearing';
-import union from '@turf/union';
+const AVAILABLE_UNITS = ['meters', 'kilometers', 'radians', 'degrees'];
 
-function pointBuffer(pt, radius, units, resolution) {
+const ERRORS = {
+  UNKNOWN_FEATURE: 'Expected feature to be a geojson type Feature, See: https://leafletjs.com/examples/geojson/',
+  UNKNOWN_GEOM_TYPE: 'Unknown geometry type! See: https://leafletjs.com/examples/geojson/',
+  INVALID_RADIUS: 'Radius must be greater than zero',
+  MULTIPOINT_SUPPORT: 'MultiPoint type is not supported at the moment',
+  MULTILINE_SUPPORT: 'MultiLine type is not supported at the moment',
+  POLYGON_SUPPORT: 'Polygon type is not supported at the moment',
+  MULTI_POLYGON_SUPPORT: 'MultiPolygon type is not supported at the moment',
+  INVALID_STEPS: 'Steps must be a positive integer'
+};
+
+function pointBuffer(pt, radius, { units, steps }) {
   const ring = [];
-  const resMultiple = 360 / resolution;
-  for (let i = 0; i < resolution; i++) {
+  const resMultiple = 360 / steps;
+  for (let i = 0; i < steps; i++) {
     const spoke = destination(pt, radius, i * resMultiple, { units });
+    if (!spoke || !spoke.geometry.coordinates) {
+      throw new Error('Couldnt find destination for point at iteration' + i);
+    }
     ring.push(spoke.geometry.coordinates);
   }
   if (ring[0][0] !== ring[ring.length - 1][0] && ring[0][1] != ring[ring.length - 1][1]) {
@@ -17,7 +32,7 @@ function pointBuffer(pt, radius, units, resolution) {
   return polygon([ring]);
 }
 
-function lineBuffer(line, radius, units, resolution) {
+function lineBuffer(line, radius, { units, steps }) {
   let lineWithBuffer;
   //break line into segments
   const segments = [];
@@ -45,7 +60,7 @@ function lineBuffer(line, radius, units, resolution) {
     const polyCoords = [[bottomLeft.geometry.coordinates, topLeft.geometry.coordinates]];
 
     // add top curve
-    const spokeNum = Math.floor(resolution / 2);
+    const spokeNum = Math.floor(steps / 2);
     const topStart = bearing(top, topLeft);
     for (let k = 1; k < spokeNum; k++) {
       const spokeDirection = topStart + 180 * (k / spokeNum);
@@ -72,25 +87,42 @@ function lineBuffer(line, radius, units, resolution) {
   return lineWithBuffer;
 }
 
-export default function(feature, radius, units, resolution) {
-  if (!resolution) resolution = 36;
-  const geom = feature.geometry;
-  if (geom.type === 'Point') {
-    return pointBuffer(feature, radius, units, resolution);
-  } else if (geom.type === 'MultiPoint') {
-    const buffers = [];
-    geom.coordinates.forEach(function(coords) {
-      buffers.push(pointBuffer(point(coords[0], coords[1]), radius, units, resolution));
-    });
-    return featurecollection(buffers);
-  } else if (geom.type === 'LineString') {
-    return lineBuffer(feature, radius, units, resolution);
-  } else if (geom.type === 'MultiLineString') {
-    const buffers = [];
-    geom.coordinates.forEach(function(line) {
-      buffers.push(lineBuffer(feature, radius, units, resolution));
-    });
-  } else if (geom.type === 'Polygon') {
-  } else if (geom.type === 'MultiPolygon') {
+module.exports = function(feature, radius, options = { units: 'meters', steps: 36 }) {
+  if (!feature || feature.type !== 'Feature' || !feature.geometry) {
+    throw new Error(ERRORS.UNKNOWN_FEATURE);
   }
-}
+
+  if (!radius || radius <= 0) {
+    throw new Error(ERRORS.INVALID_RADIUS);
+  }
+
+  const { units, steps } = options;
+  if (!units || !AVAILABLE_UNITS.includes(units)) {
+    throw new Error('Unknown units type! Must be on of: ' + AVAILABLE_UNITS.join(', '));
+  }
+
+  if (steps <= 0) {
+    throw new Error(ERRORS.INVALID_STEPS);
+  }
+
+  const geom = feature.geometry;
+
+  switch (geom.type) {
+    case 'Point':
+      return pointBuffer(feature, radius, { units, steps });
+    case 'MultiPoint':
+      throw new Error(ERRORS.MULTIPOINT_SUPPORT);
+    // return featurecollection(geom.coordinates.map(p => pointBuffer(p, radius, { units, steps })));
+    case 'LineString':
+      return lineBuffer(feature, radius, { units, steps });
+    case 'MultiLine':
+      throw new Error(ERRORS.MULTILINE_SUPPORT);
+    // return featurecollection(geom.coordinates.map(l => lineBuffer(l, radius, { units, steps })));
+    case 'Polygon':
+      throw new Error(ERRORS.POLYGON_SUPPORT);
+    case 'MultiPolygon':
+      throw new Error(ERRORS.MULTI_POLYGON_SUPPORT);
+    default:
+      throw new Error(ERRORS.UNKNOWN_GEOM_TYPE);
+  }
+};
