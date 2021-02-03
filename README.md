@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/arkhemlol/geobuffer.svg?branch=master)](https://travis-ci.org/arkhemlol/geobuffer)
+[!Build Status](https://github.com/actions/geobuffer/workflows/Release/badge.svg)
 
 ### Geographical buffer of the given radius around polyline or point
 
