@@ -1,4 +1,4 @@
-[!Build Status](https://github.com/actions/geobuffer/workflows/Release/badge.svg)
+![Release](https://github.com/arkhemlol/geobuffer/workflows/Release/badge.svg?event=release)
 
 ### Geographical buffer of the given radius around polyline or point
 
