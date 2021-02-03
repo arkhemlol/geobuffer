@@ -28,8 +28,8 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "gh-pages": "webpack --config webpack.gh-pages.js",
+    "build": "webpack serve --config webpack.prod.js",
+    "gh-pages": "webpack serve --config webpack.gh-pages.js",
     "test": "jest"
   },
   "files": [
