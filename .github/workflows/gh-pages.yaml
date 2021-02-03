@@ -25,9 +25,9 @@ jobs:
 
       - name: Build
         run: npm run gh-pages
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: GitHub Pages action
+        uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
+          keep_files: true
